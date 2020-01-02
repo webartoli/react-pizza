@@ -8,24 +8,29 @@ interface IngredientsProps {
 }
 
 interface IngredientRowProps {
+  key: any
   name: string
-  selected: boolean
-  setIngredient
-  unsetIngredient
+  ingredients: string[]
+  setIngredients
 }
 
 const IngredientRow = (props: IngredientRowProps) => {
 
-  const toggleIngredient = () => {
-    if (props.selected) 
-      props.unsetIngredient() 
-    else
-      props.setIngredient() 
+  const selected = props.ingredients.some(y => y === props.name)
+
+  const add = () => props.setIngredients([...props.ingredients, props.name]);
+
+  const remove = () => {
+    let list = [...props.ingredients]
+    list.splice( list.indexOf(props.name), 1 )
+    props.setIngredients(list)
   }
 
+  const toggle = selected ? remove : add;
+
   return (
-    <li onClick={_ => toggleIngredient()}>
-    {props.selected ? 'X': '-'} {props.name}
+    <li onClick={toggle}>
+    {selected ? 'X': '-'} {props.name}
     </li>
   )
 }
@@ -34,21 +39,7 @@ export const ChooseIngredients = (props: IngredientsProps) => {
 
   const ingredients = props
     .availableIngredients
-    .map(x => ({
-      name: x,
-      selected: props.ingredients.some(y => y === x),
-      setIngredient: () => {
-        let newVal = [...ingredients, x]
-        console.log(newVal)
-        props.setIngredients(newVal)
-      },
-      unsetIngredient: () => {
-        let list = [...props.ingredients]
-        list.splice( list.indexOf(x), 1 )
-        props.setIngredients(x)
-        }
-    }))
-    .map(x => <IngredientRow {...x} />)
+    .map(x => <IngredientRow key={x} name={x} ingredients={props.ingredients} setIngredients={props.setIngredients}  />)
 
  return (
   <div>
