@@ -22,7 +22,7 @@ interface AppState {
 export default function App() {
 
   let [name, setName] = useState('')
-  let [ingredients, setIngredients] = useState([])
+  let selectedIngredients = useState<string[]>([])
 
   let availableIngredients = [
     'Pomorodo', 'Mozzarella', 'Capperi', 'Acciughe'
@@ -49,7 +49,7 @@ export default function App() {
             <WhoAreYou name={name} setName={setName} />
           </Route>
            <Route path="/ingredients">
-            <ChooseIngredients name={name} availableIngredients= {availableIngredients} ingredients={ingredients} setIngredients={setIngredients} />
+            <ChooseIngredients name={name} availableIngredients= {availableIngredients} selectedIngredients={selectedIngredients} />
           </Route>
           <Route path="/">
             <Home />

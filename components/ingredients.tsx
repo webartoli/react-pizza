@@ -3,27 +3,27 @@ import React from 'react';
 interface IngredientsProps {
   name: string
   availableIngredients: string[]
-  ingredients: string[]
-  setIngredients: any
+  selectedIngredients: [string[], React.Dispatch<React.SetStateAction<string[]>>]
 }
 
 interface IngredientRowProps {
   key: any
   name: string
-  ingredients: string[]
-  setIngredients
+  selectedIngredients: [string[], React.Dispatch<React.SetStateAction<string[]>>]
 }
 
 const IngredientRow = (props: IngredientRowProps) => {
 
-  const selected = props.ingredients.some(y => y === props.name)
+  const [ingredients, setIngredients] = props.selectedIngredients
 
-  const add = () => props.setIngredients([...props.ingredients, props.name]);
+  const selected = ingredients.some(y => y === props.name)
+
+  const add = () => setIngredients([...ingredients, props.name]);
 
   const remove = () => {
-    let list = [...props.ingredients]
+    let list = [...ingredients]
     list.splice( list.indexOf(props.name), 1 )
-    props.setIngredients(list)
+    setIngredients(list)
   }
 
   const toggle = selected ? remove : add;
@@ -39,7 +39,7 @@ export const ChooseIngredients = (props: IngredientsProps) => {
 
   const ingredients = props
     .availableIngredients
-    .map(x => <IngredientRow key={x} name={x} ingredients={props.ingredients} setIngredients={props.setIngredients}  />)
+    .map(x => <IngredientRow key={x} name={x} selectedIngredients={props.selectedIngredients}  />)
 
  return (
   <div>
