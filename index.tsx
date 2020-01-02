@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { render } from 'react-dom';
 import Hello from './Hello';
 import './style.css';
+import { WhoAreYou } from './components/who';
+import { ChooseIngredients } from './components/ingredients'
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,7 +17,17 @@ interface AppState {
 }
 
 
+
+
 export default function App() {
+
+  let [name, setName] = useState('')
+  let [ingredients, setIngredients] = useState([])
+
+  let availableIngredients = [
+    'Pomorodo', 'Mozzarella', 'Capperi', 'Acciughe'
+  ]
+
   return (
     <Router>
       <div>
@@ -33,9 +45,16 @@ export default function App() {
           <Route path="/old">
             <App2 />
           </Route>
+          <Route path="/who">
+            <WhoAreYou name={name} setName={setName} />
+          </Route>
+           <Route path="/ingredients">
+            <ChooseIngredients name={name} availableIngredients= {availableIngredients} ingredients={ingredients} setIngredients={setIngredients} />
+          </Route>
           <Route path="/">
             <Home />
           </Route>
+         
         </Switch>
       </div>
     </Router>
@@ -56,6 +75,9 @@ function Nav() {
             </li>
             <li>
               <Link to="/old">Old App</Link>
+            </li>
+            <li>
+              <Link to="/who">Step 1</Link>
             </li>
           </ul>
         </nav>;
