@@ -32,9 +32,6 @@ export default function App() {
     <Router>
       <h1>Pizza BHO</h1>
       <div>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/who"  >
             <WhoAreYou name={name} setName={setName} />
@@ -49,9 +46,6 @@ export default function App() {
             <Summary name={name} ingredients={selectedIngredients[0]} />
           </Route>
           <Redirect from="/" to="/who" />
-          <Route>
-            <NoMatch />
-          </Route>
         </Switch>
       </div>
     </Router>

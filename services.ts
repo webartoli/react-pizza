@@ -1,6 +1,5 @@
 
 import firebase from 'firebase'
-import 'firebase/firestore'
 
 if (!firebase.apps.length) 
   firebase.initializeApp({
@@ -15,7 +14,26 @@ if (!firebase.apps.length)
   });
 
 var db = firebase.firestore();
-export const ingredients = async () => db.collection('ingredients').get()
+
+const data = <TOut, TIn = firebase.firestore.DocumentData>(array: firebase.firestore.QuerySnapshot<TIn>) => {
+  let result: TOut[] = []
+  array.forEach(x => {
+    result.push(x.data() as any)
+  })
+  return result
+}
+
+type Ingredient = string
+
+interface IngredientCategory {
+  category: string
+  ingredients: Ingredient[]
+}
+
+export const ingredients = async () => db
+  .collection('ingredients')
+  .get()
+  .then(x => data<IngredientCategory>(x))
 
 export const availableIngredients = () => [
     // Base
@@ -31,9 +49,14 @@ export const availableIngredients = () => [
   ]
 
 const fire = async () => {
-  ingredients()
-    .then(data => console.log(data))
-    .catch(err => console.warn(err))
+
+  try {
+    const data = await ingredients()
+    console.log(data)
+  }
+  catch(err) {
+    console.warn(err)
+  }
 }
 
 fire()
