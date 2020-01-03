@@ -29,6 +29,7 @@ type Ingredient = string
 interface IngredientCategory {
   category: string
   ingredients: Ingredient[]
+  order: number
 }
 
 export const ingredients = async () => db
@@ -53,7 +54,7 @@ const fire = async () => {
 
   try {
     const data = await ingredients()
-    console.log(data.flatMap(x => x.ingredients))
+    console.log(data.sort((a, b) => a.order - b.order).flatMap(x => x.ingredients))
   }
   catch(err) {
     console.warn(err)
