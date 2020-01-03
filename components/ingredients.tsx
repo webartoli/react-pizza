@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 interface IngredientsProps {
   name: string
@@ -48,7 +49,8 @@ export const ChooseIngredients = (props: IngredientsProps) => {
     <ul>
       { ingredients }
     </ul>
-    <button>Avanti ></button>
+    <Link to="/who">Indietro</Link>
+    <Link to="/summary">Avanti</Link>
   </div>
 )
 }

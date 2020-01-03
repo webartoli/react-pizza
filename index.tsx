@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import Hello from './Hello';
 import './style.css';
 import { WhoAreYou } from './components/who';
+import { Summary, Confirm } from './components/summary';
 import { ChooseIngredients } from './components/ingredients'
 import {
   BrowserRouter as Router,
@@ -48,8 +49,14 @@ export default function App() {
           <Route path="/who">
             <WhoAreYou name={name} setName={setName} />
           </Route>
-           <Route path="/ingredients">
+          <Route path="/confirmed">
+            <Confirm name={name} />
+          </Route>
+           <Route path="/compose">
             <ChooseIngredients name={name} availableIngredients= {availableIngredients} selectedIngredients={selectedIngredients} />
+          </Route>
+          <Route path="/summary">
+            <Summary name={name} ingredients={selectedIngredients[0]} />
           </Route>
           <Route path="/">
             <Home />

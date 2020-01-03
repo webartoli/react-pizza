@@ -6,6 +6,6 @@ export const WhoAreYou = (props) => {
   <div>
     <h2>Chi sei ?</h2>
     <input type="text" value={props.name} onChange={x => props.setName(x.target.value)} />
-     <Link to="/ingredients">Scegli gli ingredienti</Link>
+     <Link to="/compose">Scegli gli ingredienti</Link>
   </div>)
   }
