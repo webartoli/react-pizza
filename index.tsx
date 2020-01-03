@@ -22,24 +22,39 @@ interface AppState {
 
 export default function App() {
 
+  const defaultIngredients = ['Pomodoro', 'Mozzarella']
+
   let [name, setName] = useState('')
-  let selectedIngredients = useState<string[]>(['Pomodoro', 'Mozzarella'])
+  let selectedIngredients = useState<string[]>(defaultIngredients)
+  let [ingredients, setIngredients] = selectedIngredients
+
+  const resetIngredients = () => {
+    setName('')
+    setIngredients(defaultIngredients)
+  }
+
   return (
     <Router>
       <h1>Pizza BHO</h1>
       <div>
         <Switch>
-          <Route path="/who"  >
-            <WhoAreYou name={name} setName={setName} />
+          <Route exact path="/who"  >
+            <WhoAreYou name={name} setName={setName} /> 
           </Route>
-          <Route path="/confirmed">
-            <Confirm name={name} />
+           <Route exact path="/compose">
+            {name 
+            ? <ChooseIngredients name={name} selectedIngredients={selectedIngredients} /> 
+            : <Redirect to="/who" />}
           </Route>
-           <Route path="/compose">
-            <ChooseIngredients name={name} selectedIngredients={selectedIngredients} />
+          <Route exact path="/summary">
+            {ingredients 
+            ? <Summary name={name} ingredients={ingredients} />
+            : <Redirect to="/compose" />}
           </Route>
-          <Route path="/summary">
-            <Summary name={name} ingredients={selectedIngredients[0]} />
+          <Route exact path="/confirmed">
+            {ingredients 
+            ? <Confirm name={name} reset={resetIngredients} /> 
+            : <Redirect to="/compose" />}
           </Route>
           <Redirect from="/" to="/who" />
         </Switch>

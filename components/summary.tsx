@@ -24,5 +24,5 @@ export const Summary = (props: Props) => {
 export const Confirm = (props) => <div>
   <p>OK {props.name}, tutto bene</p>
   <p>Pizza registrata correttamente</p>
-  <Link to="/who">Ordina un altra pizza</Link>
+  <Link onClick={() => props.reset()} to="/who">Ordina un altra pizza</Link>
 </div>
