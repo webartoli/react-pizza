@@ -15,7 +15,7 @@ if (!firebase.apps.length)
 
 var db = firebase.firestore();
 
-const data = <TOut, TIn = firebase.firestore.DocumentData>(array: firebase.firestore.QuerySnapshot<TIn>) => {
+const data = <TOut = firebase.firestore.DocumentData, TIn = firebase.firestore.DocumentData>(array: firebase.firestore.QuerySnapshot<TIn>): TOut[] =>  {
   let result: TOut[] = []
   array.forEach(x => {
     result.push(x.data() as any)
@@ -52,7 +52,7 @@ const fire = async () => {
 
   try {
     const data = await ingredients()
-    console.log(data)
+    console.log(data.flatMap(x => x))
   }
   catch(err) {
     console.warn(err)
