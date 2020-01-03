@@ -5,9 +5,9 @@ export const availableIngredients = () => [
     // Affettati
     'Prosciutto', 'Crudo', 'Salsiccia', 'Wurstel',  'Speck', 'Salamino Piccante', 'Pancetta',
     // Verdure
-    'Funghi', 'Cipolla', 'Verdure grigliate',
+    'Funghi', 'Cipolla', 'Verdure grigliate', 'Peperoni',
     // Formaggi
-    'Scamorza',
+    'Scamorza', 'Gorgonzola',
     // Sottoli e sottaceti
     'Capperi', 'Olive', 'Acciughe'
   ]
