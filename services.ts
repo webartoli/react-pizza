@@ -1,5 +1,6 @@
 
 import * as firebase from 'firebase/app'
+import 'firebase/firestore'
 
 if (!firebase.apps.length) 
   firebase.initializeApp({
@@ -15,8 +16,8 @@ if (!firebase.apps.length)
 
 var db = firebase.firestore();
 
-const data = <TOut = firebase.firestore.DocumentData, TIn = firebase.firestore.DocumentData>(array: firebase.firestore.QuerySnapshot<TIn>): TOut[] =>  {
-  let result: TOut[] = []
+const data = <TIn = firebase.firestore.DocumentData>(array: firebase.firestore.QuerySnapshot<TIn>): any[] =>  {
+  let result: any[] = []
   array.forEach(x => {
     result.push(x.data() as any)
   })
@@ -33,7 +34,7 @@ interface IngredientCategory {
 export const ingredients = async () => db
   .collection('ingredients')
   .get()
-  .then(x => data<IngredientCategory>(x))
+  .then<IngredientCategory[]>(data)
 
 export const availableIngredients = () => [
     // Base
@@ -52,7 +53,7 @@ const fire = async () => {
 
   try {
     const data = await ingredients()
-    console.log(data.flatMap(x => x))
+    console.log(data.flatMap(x => x.ingredients))
   }
   catch(err) {
     console.warn(err)
@@ -60,3 +61,4 @@ const fire = async () => {
 }
 
 fire()
+
