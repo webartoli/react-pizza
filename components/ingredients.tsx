@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, {useState, useEffect } from 'react';
+import { Link,  } from "react-router-dom";
+import {ingredients as getAvailableIngredients} from '../services'
 
 interface IngredientsProps {
   name: string
-  availableIngredients: string[]
   selectedIngredients: [string[], React.Dispatch<React.SetStateAction<string[]>>]
 }
 
@@ -38,8 +38,23 @@ const IngredientRow = (props: IngredientRowProps) => {
 
 export const ChooseIngredients = (props: IngredientsProps) => {
 
-  const ingredients = props
-    .availableIngredients
+  const [ingredients, setIngredients] = useState({
+    loading: true,
+    data: [],
+    error: null
+  })
+
+  useEffect(() => {
+    const fetchData = async () => getAvailableIngredients()
+      .then(data => setIngredients({ loading: false, data: data, error: null}))
+      .catch(err => setIngredients({loading: false, data: null, error: err}))
+    
+    fetchData()
+  }, [])
+
+  const {loading, error, data} = ingredients
+
+  const rows = data
     .map(x => <IngredientRow key={x} name={x} selectedIngredients={props.selectedIngredients}  />)
 
  return (
@@ -47,7 +62,7 @@ export const ChooseIngredients = (props: IngredientsProps) => {
     <h2>Ciao {props.name}</h2>
     <span>Scegli gli ingredienti...</span>
     <ul>
-      { ingredients }
+      { loading ? 'loading' : rows }
     </ul>
     <Link to="/who">Indietro</Link>
     <Link to="/summary">Avanti</Link>

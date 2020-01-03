@@ -37,7 +37,7 @@ export const ingredients = async () => db
   .get()
   .then<IngredientCategory[]>(data)
   .then(x => x.sort((a, b) => a.order - b.order))
-  .then(cat => cat.flatMap(x => x.ingredients))
+  .then<Ingredient[]>(cat => cat.flatMap(x => x.ingredients))
 
 export const availableIngredients = () => [
     // Base

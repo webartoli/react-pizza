@@ -23,11 +23,7 @@ interface AppState {
 export default function App() {
 
   let [name, setName] = useState('')
-  let selectedIngredients = useState<string[]>([])
-
-  const availableIngredients = services.availableIngredients()
-
-
+  let selectedIngredients = useState<string[]>(['Pomodoro', 'Mozzarella'])
   return (
     <Router>
       <h1>Pizza BHO</h1>
@@ -40,7 +36,7 @@ export default function App() {
             <Confirm name={name} />
           </Route>
            <Route path="/compose">
-            <ChooseIngredients name={name} availableIngredients={availableIngredients} selectedIngredients={selectedIngredients} />
+            <ChooseIngredients name={name} selectedIngredients={selectedIngredients} />
           </Route>
           <Route path="/summary">
             <Summary name={name} ingredients={selectedIngredients[0]} />
