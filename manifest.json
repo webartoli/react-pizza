@@ -1,0 +1,22 @@
+{
+  "short_name": "Pizza",
+  "name": "Pizza BHO",
+  "icons": [
+    {
+      "src": "/images/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/pizza-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "scope": "/",
+  "start_url": "/who/?source=pwa",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#D32F2F",
+  "theme_color": "#D32F2F"
+}
