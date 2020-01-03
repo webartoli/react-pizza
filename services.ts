@@ -36,6 +36,8 @@ export const ingredients = async () => db
   .collection('ingredients')
   .get()
   .then<IngredientCategory[]>(data)
+  .then(x => x.sort((a, b) => a.order - b.order))
+  .then(cat => cat.flatMap(x => x.ingredients))
 
 export const availableIngredients = () => [
     // Base
@@ -49,17 +51,3 @@ export const availableIngredients = () => [
     // Sottoli e sottaceti
     'Capperi', 'Olive', 'Acciughe'
   ]
-
-const fire = async () => {
-
-  try {
-    const data = await ingredients()
-    console.log(data.sort((a, b) => a.order - b.order).flatMap(x => x.ingredients))
-  }
-  catch(err) {
-    console.warn(err)
-  }
-}
-
-fire()
-
